@@ -16,25 +16,21 @@ public class HelloController {
     private static final String templ = "Hello %s!";
     private final AtomicLong counter = new AtomicLong();
 
-    @GetMapping("/hello")
-    public String hello(
-            @RequestParam(name="name", required=false, defaultValue="World") String name,
-            Map<String, Object> model
-    ) {
-        model.put("name", name);
+    @GetMapping("/")
+    public String hello(Map<String, Object> model) {
         return "hello";
     }
 
-    @GetMapping("/")
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<Message> messages = messageRepository.findAll();
 
         model.put("messages", messages);
 
-        return "hello";
+        return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
         Message message = new Message(text, tag);
 
